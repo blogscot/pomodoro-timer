@@ -21,9 +21,11 @@ class Clock extends Component {
     }, 1000)
   }
   render() {
+    let { duration, currentTime } = this.state
+    const remainingTime = duration - currentTime
     return (
       <div className={styles.clock}>
-        <Display seconds={this.state.currentTime}></Display>
+        <Display seconds={remainingTime}></Display>
         <Timer total={this.state.duration} current={this.state.currentTime} />
       </div>
     )

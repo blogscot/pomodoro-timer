@@ -17,6 +17,7 @@ class Timer extends Component {
     let fraction = (total - current) / total
     let currentAngle = this.endAngle - 2 * Math.PI * fraction
     context.clearRect(0, 0, this.width, this.height)
+    this.drawBackground(context)
     this.drawTimer(context, currentAngle, this.endAngle)
   }
   drawTimer = (context, startAngle, endAngle) => {
@@ -24,6 +25,13 @@ class Timer extends Component {
     context.arc(150, 150, 100, startAngle, endAngle)
     context.lineWidth = 5
     context.strokeStyle = 'green'
+    context.stroke()
+  }
+  drawBackground = context => {
+    context.beginPath()
+    context.arc(150, 150, 100, this.startAngle, this.endAngle)
+    context.lineWidth = 5
+    context.strokeStyle = '#eee'
     context.stroke()
   }
   render() {

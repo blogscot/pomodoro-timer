@@ -1,0 +1,7 @@
+img {
+  height: 20px;
+}
+
+.controlPanel {
+  transform: translateY(-100px);
+}

@@ -1,11 +1,18 @@
 import React from 'react'
 import Clock from './components/Clock'
+import Session from './components/Session'
+import ControlPanel from './components/ControlPanel'
 import './App.css'
 
 function App() {
   return (
     <div className="App">
+      <div id="sessions">
+        <Session title="Pomodoro Timer" duration={30} />
+        <Session title="Break Timer" duration={5} />
+      </div>
       <Clock />
+      <ControlPanel />
     </div>
   )
 }

@@ -10,7 +10,6 @@ class Clock extends Component {
   running = false
   timer = null
   state = {
-    duration: 180,
     currentTime: 0,
   }
   constructor(props) {
@@ -32,7 +31,7 @@ class Clock extends Component {
       this.setState({
         currentTime: newTime,
       })
-      if (newTime >= this.state.duration) {
+      if (newTime >= this.props.duration) {
         clearInterval(this.timer)
         this.props.toggleRunning()
         this.running = false
@@ -40,12 +39,13 @@ class Clock extends Component {
     }, 1000)
   }
   render() {
-    let { duration, currentTime } = this.state
+    let { currentTime } = this.state
+    let { duration } = this.props
     const remainingTime = duration - currentTime
     return (
       <div className={styles.clock}>
         <Display seconds={remainingTime}></Display>
-        <Timer total={this.state.duration} current={this.state.currentTime} />
+        <Timer total={duration} current={currentTime} />
       </div>
     )
   }
@@ -53,6 +53,7 @@ class Clock extends Component {
 
 const mapStateToProps = state => ({
   running: state.running,
+  duration: state.duration,
 })
 
 const mapDispatchToProps = dispatch => ({

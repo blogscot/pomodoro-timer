@@ -1,17 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { toggleRunning } from '../actions'
+import { toggleRunning, setElapsedTime } from '../actions'
 import Timer from './Timer'
 import Display from './Display'
 import styles from './Clock.module.css'
 
 class Clock extends Component {
-  currentTime = 0
   running = false
   timer = null
-  state = {
-    currentTime: 0,
-  }
   constructor(props) {
     super(props)
     this.startClock = this.startClock.bind(this)
@@ -27,11 +23,10 @@ class Clock extends Component {
   }
   startClock() {
     this.timer = setInterval(() => {
-      const newTime = this.state.currentTime + 1
-      this.setState({
-        currentTime: newTime,
-      })
-      if (newTime >= this.props.duration) {
+      const { elapsedTime, duration } = this.props
+      const newTime = elapsedTime + 1
+      this.props.setElapsedTime(newTime)
+      if (newTime >= duration) {
         clearInterval(this.timer)
         this.props.toggleRunning()
         this.running = false
@@ -39,13 +34,11 @@ class Clock extends Component {
     }, 1000)
   }
   render() {
-    let { currentTime } = this.state
-    let { duration } = this.props
-    const remainingTime = duration - currentTime
+    const { elapsedTime, duration } = this.props
     return (
       <div className={styles.clock}>
-        <Display seconds={remainingTime}></Display>
-        <Timer total={duration} current={currentTime} />
+        <Display seconds={duration - elapsedTime}></Display>
+        <Timer total={duration} current={elapsedTime} />
       </div>
     )
   }
@@ -54,10 +47,12 @@ class Clock extends Component {
 const mapStateToProps = state => ({
   running: state.running,
   duration: state.duration,
+  elapsedTime: state.elapsedTime,
 })
 
 const mapDispatchToProps = dispatch => ({
   toggleRunning: () => dispatch(toggleRunning()),
+  setElapsedTime: time => dispatch(setElapsedTime(time)),
 })
 
 export default connect(

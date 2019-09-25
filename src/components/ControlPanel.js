@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { toggleRunning } from '../actions'
+import { toggleRunning, setElapsedTime } from '../actions'
 import styles from './ControlPanel.module.css'
 
 class ControlPanel extends Component {
@@ -13,7 +13,7 @@ class ControlPanel extends Component {
     this.props.toggleRunning()
   }
   reset() {
-    console.log('reset')
+    this.props.setElapsedTime(0)
   }
   render() {
     return (
@@ -42,6 +42,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   toggleRunning: () => dispatch(toggleRunning()),
+  setElapsedTime: time => dispatch(setElapsedTime(time)),
 })
 
 export default connect(

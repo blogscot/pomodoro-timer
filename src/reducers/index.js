@@ -1,14 +1,19 @@
 import {
   TOGGLE_RUNNING,
-  RESET_DURATION,
   SET_DURATION,
   SET_BREAK_DURATION,
+  SELECT_TIMER,
+  SET_ELAPSED_TIME,
+  POMODORO_TIMER,
+  BREAK_TIMER,
 } from '../actions'
 
 const defaultState = {
   running: false,
+  elapsedTime: 0,
   duration: 15 * 60,
-  break_duration: 2 * 60,
+  breakDuration: 2 * 60,
+  timerType: POMODORO_TIMER,
 }
 
 const pomodoro = (state = defaultState, action) => {
@@ -18,11 +23,6 @@ const pomodoro = (state = defaultState, action) => {
         ...state,
         running: !state.running,
       }
-    case RESET_DURATION:
-      return {
-        ...state,
-        duration: 0,
-      }
     case SET_DURATION:
       return {
         ...state,
@@ -31,7 +31,21 @@ const pomodoro = (state = defaultState, action) => {
     case SET_BREAK_DURATION:
       return {
         ...state,
-        break_duration: action.break_duration,
+        breakDuration: action.breakDuration,
+      }
+    case SELECT_TIMER:
+      const { timerType } = action
+      if (timerType === POMODORO_TIMER || timerType === BREAK_TIMER) {
+        return {
+          ...state,
+          timerType,
+        }
+      }
+      return state
+    case SET_ELAPSED_TIME:
+      return {
+        ...state,
+        elapsedTime: action.elapsedTime,
       }
     default:
       return state

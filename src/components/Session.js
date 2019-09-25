@@ -8,7 +8,7 @@ class Session extends Component {
     super(props)
     this.state = {
       duration: this.props.duration,
-      break_duration: this.props.break_duration,
+      breakDuration: this.props.breakDuration,
     }
   }
   increment = () => {
@@ -19,8 +19,8 @@ class Session extends Component {
       this.setState({ duration: newDuration })
       this.props.setDuration(newDuration)
     } else {
-      newDuration = this.state.break_duration + 60
-      this.setState({ break_duration: newDuration })
+      newDuration = this.state.breakDuration + 60
+      this.setState({ breakDuration: newDuration })
       this.props.setBreakDuration(newDuration)
     }
   }
@@ -34,9 +34,9 @@ class Session extends Component {
         this.props.setDuration(newDuration)
       }
     } else {
-      if (this.state.break_duration > 0) {
-        newDuration = this.state.break_duration - 60
-        this.setState({ break_duration: newDuration })
+      if (this.state.breakDuration > 0) {
+        newDuration = this.state.breakDuration - 60
+        this.setState({ breakDuration: newDuration })
         this.props.setBreakDuration(newDuration)
       }
     }
@@ -44,7 +44,7 @@ class Session extends Component {
   render() {
     const duration = this.props.pomodoro
       ? this.state.duration
-      : this.state.break_duration
+      : this.state.breakDuration
     const minutesSeconds = `${duration / 60}:00`
     return (
       <div>
@@ -68,7 +68,9 @@ class Session extends Component {
 }
 
 const mapStateToProps = state => ({
-  ...state,
+  running: state.running,
+  duration: state.duration,
+  breakDuration: state.breakDuration,
 })
 
 const mapDispatchToProps = dispatch => ({

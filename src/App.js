@@ -8,8 +8,8 @@ function App() {
   return (
     <div className="App">
       <div id="sessions">
-        <Session title="Pomodoro Timer" duration={30} />
-        <Session title="Break Timer" duration={5} />
+        <Session title="Pomodoro Timer" pomodoro />
+        <Session title="Break Timer" />
       </div>
       <Clock />
       <ControlPanel />

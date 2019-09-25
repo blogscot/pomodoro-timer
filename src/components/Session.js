@@ -1,21 +1,51 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { setDuration, setBreakDuration } from '../actions'
 import styles from './Session.module.css'
 
 class Session extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      minutes: this.props.duration,
+      duration: this.props.duration,
+      break_duration: this.props.break_duration,
     }
   }
-  increment = () => this.setState({ minutes: this.state.minutes + 1 })
+  increment = () => {
+    if (this.props.running) return
+    let newDuration
+    if (this.props.pomodoro) {
+      newDuration = this.state.duration + 60
+      this.setState({ duration: newDuration })
+      this.props.setDuration(newDuration)
+    } else {
+      newDuration = this.state.break_duration + 60
+      this.setState({ break_duration: newDuration })
+      this.props.setBreakDuration(newDuration)
+    }
+  }
   decrement = () => {
-    if (this.state.minutes > 1) {
-      this.setState({ minutes: this.state.minutes - 1 })
+    if (this.props.running) return
+    let newDuration
+    if (this.props.pomodoro) {
+      if (this.state.duration > 60) {
+        newDuration = this.state.duration - 60
+        this.setState({ duration: newDuration })
+        this.props.setDuration(newDuration)
+      }
+    } else {
+      if (this.state.break_duration > 0) {
+        newDuration = this.state.break_duration - 60
+        this.setState({ break_duration: newDuration })
+        this.props.setBreakDuration(newDuration)
+      }
     }
   }
   render() {
-    const minutesSeconds = `${this.state.minutes}:00`
+    const duration = this.props.pomodoro
+      ? this.state.duration
+      : this.state.break_duration
+    const minutesSeconds = `${duration / 60}:00`
     return (
       <div>
         <div className={styles.title}>{this.props.title}</div>
@@ -37,4 +67,16 @@ class Session extends Component {
   }
 }
 
-export default Session
+const mapStateToProps = state => ({
+  ...state,
+})
+
+const mapDispatchToProps = dispatch => ({
+  setDuration: duration => dispatch(setDuration(duration)),
+  setBreakDuration: duration => dispatch(setBreakDuration(duration)),
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Session)

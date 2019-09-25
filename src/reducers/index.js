@@ -1,7 +1,7 @@
-import { TOGGLE_RUNNING, RESET_TIMER, SET_TIMER } from '../actions'
+import { TOGGLE_RUNNING, RESET_DURATION, SET_DURATION } from '../actions'
 const defaultState = {
   running: false,
-  timer: 300,
+  duration: 60,
 }
 
 const pomodoro = (state = defaultState, action) => {
@@ -11,15 +11,15 @@ const pomodoro = (state = defaultState, action) => {
         ...state,
         running: !state.running,
       }
-    case RESET_TIMER:
+    case RESET_DURATION:
       return {
         ...state,
-        timer: 0,
+        duration: 0,
       }
-    case SET_TIMER:
+    case SET_DURATION:
       return {
         ...state,
-        timer: action.duration,
+        duration: action.duration,
       }
     default:
       return state

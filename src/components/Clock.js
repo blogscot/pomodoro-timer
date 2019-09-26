@@ -4,34 +4,45 @@ import { toggleRunning, setElapsedTime } from '../actions'
 import Timer from './Timer'
 import Display from './Display'
 import styles from './Clock.module.css'
+import Alarm from './assets/audio/alarm.mov'
 
 class Clock extends Component {
   running = false
-  timer = null
+  timerID = null
   constructor(props) {
     super(props)
-    this.startClock = this.startClock.bind(this)
+    this.startClock = this.startTimer.bind(this)
+    this.tick = this.tick.bind(this)
+  }
+  componentDidMount() {
+    this.audio = new Audio(Alarm)
+    this.audio.load()
   }
   componentDidUpdate() {
     if (!this.running && this.props.running) {
       this.running = true
-      this.startClock()
+      this.startTimer()
     } else if (this.running && !this.props.running) {
       this.running = false
-      clearInterval(this.timer)
+      clearInterval(this.timerID)
     }
   }
-  startClock() {
-    this.timer = setInterval(() => {
-      const { elapsedTime, duration } = this.props
-      const newTime = elapsedTime + 1
-      this.props.setElapsedTime(newTime)
-      if (newTime >= duration) {
-        clearInterval(this.timer)
-        this.props.toggleRunning()
-        this.running = false
-      }
-    }, 1000)
+  componentWillUnmount() {
+    clearInterval(this.timerID)
+  }
+  startTimer() {
+    this.timerID = setInterval(this.tick, 1000)
+  }
+  tick() {
+    const { elapsedTime, duration } = this.props
+    const newTime = elapsedTime + 1
+    this.props.setElapsedTime(newTime)
+    if (newTime >= duration) {
+      this.audio.play()
+      clearInterval(this.timerID)
+      this.props.toggleRunning()
+      this.running = false
+    }
   }
   render() {
     const { elapsedTime, duration } = this.props

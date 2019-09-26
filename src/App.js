@@ -8,8 +8,8 @@ function App() {
   return (
     <div className="App">
       <div id="sessions">
-        <Session title="Pomodoro Timer" pomodoro />
-        <Session title="Break Timer" />
+        <Session title="session Length" pomodoro />
+        <Session title="break Length" />
       </div>
       <Clock />
       <ControlPanel />

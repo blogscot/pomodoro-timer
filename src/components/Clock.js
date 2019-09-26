@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { toggleRunning, setElapsedTime } from '../actions'
 import Timer from './Timer'
 import Display from './Display'
+import Alarm from '../utils/Alarm'
 import styles from './Clock.module.css'
-import Alarm from './assets/audio/alarm.mov'
 
 class Clock extends Component {
   running = false
@@ -14,10 +14,7 @@ class Clock extends Component {
     this.startClock = this.startTimer.bind(this)
     this.tick = this.tick.bind(this)
   }
-  componentDidMount() {
-    this.audio = new Audio(Alarm)
-    this.audio.load()
-  }
+
   componentDidUpdate() {
     if (!this.running && this.props.running) {
       this.running = true
@@ -38,7 +35,7 @@ class Clock extends Component {
     const newTime = elapsedTime + 1
     this.props.setElapsedTime(newTime)
     if (newTime >= duration) {
-      this.audio.play()
+      Alarm.play()
       clearInterval(this.timerID)
       this.props.toggleRunning()
       this.running = false

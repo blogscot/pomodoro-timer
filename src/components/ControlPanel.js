@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { toggleRunning, setElapsedTime } from '../actions'
+import Alarm from '../utils/Alarm'
 import styles from './ControlPanel.module.css'
 
 class ControlPanel extends Component {
@@ -14,6 +15,7 @@ class ControlPanel extends Component {
   }
   reset() {
     this.props.setElapsedTime(0)
+    Alarm.stop()
   }
   render() {
     return (

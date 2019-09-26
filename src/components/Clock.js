@@ -6,8 +6,12 @@ import Display from './Display'
 import Alarm from '../utils/Alarm'
 import styles from './Clock.module.css'
 
+const SESSION = 'SESSION'
+const BREAK = 'BREAK'
+
 class Clock extends Component {
   running = false
+  currentTimer = SESSION
   timerID = null
   constructor(props) {
     super(props)
@@ -31,22 +35,33 @@ class Clock extends Component {
     this.timerID = setInterval(this.tick, 1000)
   }
   tick() {
-    const { elapsedTime, duration } = this.props
+    const { elapsedTime } = this.props
     const newTime = elapsedTime + 1
     this.props.setElapsedTime(newTime)
-    if (newTime >= duration) {
+    if (newTime >= this.currentDuration) {
       Alarm.play()
       clearInterval(this.timerID)
-      this.props.toggleRunning()
-      this.running = false
+      this.currentTimer = this.sessionTimerRunning ? BREAK : SESSION
+      this.props.setElapsedTime(0)
+      this.startTimer()
     }
   }
+  get sessionTimerRunning() {
+    return this.currentTimer === SESSION
+  }
+  get breakTimerRunning() {
+    return !this.sessionTimerRunning
+  }
+  get currentDuration() {
+    const { duration, breakDuration } = this.props
+    return this.sessionTimerRunning ? duration : breakDuration
+  }
   render() {
-    const { elapsedTime, duration } = this.props
+    const { elapsedTime } = this.props
     return (
       <div className={styles.clock}>
-        <Display seconds={duration - elapsedTime}></Display>
-        <Timer total={duration} current={elapsedTime} />
+        <Display seconds={this.currentDuration - elapsedTime}></Display>
+        <Timer total={this.currentDuration} current={elapsedTime} />
       </div>
     )
   }
@@ -55,6 +70,7 @@ class Clock extends Component {
 const mapStateToProps = state => ({
   running: state.running,
   duration: state.duration,
+  breakDuration: state.breakDuration,
   elapsedTime: state.elapsedTime,
 })
 

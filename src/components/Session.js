@@ -11,7 +11,9 @@ class Session extends Component {
         this.props.setDuration(this.props.duration + 60)
       }
     } else {
-      this.props.setBreakDuration(this.props.breakDuration + 60)
+      if (this.props.breakDuration < 1800) {
+        this.props.setBreakDuration(this.props.breakDuration + 60)
+      }
     }
   }
   decrement = () => {

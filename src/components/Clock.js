@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
-  toggleRunning,
   setElapsedTime,
   setTimer,
   SESSION_TIMER,
@@ -76,7 +75,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  toggleRunning: () => dispatch(toggleRunning()),
   setElapsedTime: time => dispatch(setElapsedTime(time)),
   setTimer: timerType => dispatch(setTimer(timerType)),
 })

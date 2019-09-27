@@ -4,47 +4,32 @@ import { setDuration, setBreakDuration } from '../actions'
 import styles from './Session.module.css'
 
 class Session extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      duration: this.props.duration,
-      breakDuration: this.props.breakDuration,
-    }
-  }
   increment = () => {
     if (this.props.running) return
-    let newDuration
     if (this.props.pomodoro) {
-      newDuration = this.state.duration + 60
-      this.setState({ duration: newDuration })
-      this.props.setDuration(newDuration)
+      if (this.props.duration < 3600) {
+        this.props.setDuration(this.props.duration + 60)
+      }
     } else {
-      newDuration = this.state.breakDuration + 60
-      this.setState({ breakDuration: newDuration })
-      this.props.setBreakDuration(newDuration)
+      this.props.setBreakDuration(this.props.breakDuration + 60)
     }
   }
   decrement = () => {
     if (this.props.running) return
-    let newDuration
     if (this.props.pomodoro) {
-      if (this.state.duration > 60) {
-        newDuration = this.state.duration - 60
-        this.setState({ duration: newDuration })
-        this.props.setDuration(newDuration)
+      if (this.props.duration > 60) {
+        this.props.setDuration(this.props.duration - 60)
       }
     } else {
-      if (this.state.breakDuration > 0) {
-        newDuration = this.state.breakDuration - 60
-        this.setState({ breakDuration: newDuration })
-        this.props.setBreakDuration(newDuration)
+      if (this.props.breakDuration > 0) {
+        this.props.setBreakDuration(this.props.breakDuration - 60)
       }
     }
   }
   render() {
     const duration = this.props.pomodoro
-      ? this.state.duration
-      : this.state.breakDuration
+      ? this.props.duration
+      : this.props.breakDuration
     const minutesSeconds = `${duration / 60}:00`
     return (
       <div>

@@ -35,16 +35,14 @@ class Clock extends Component {
     this.timerID = setInterval(this.tick, 1000)
   }
   tick() {
-    const { elapsedTime } = this.props
+    const { elapsedTime, setElapsedTime, setTimer } = this.props
     const newTime = elapsedTime + 1
-    this.props.setElapsedTime(newTime)
+    setElapsedTime(newTime)
     if (newTime > this.currentDuration) {
       Alarm.play()
       clearInterval(this.timerID)
-      this.props.setTimer(
-        this.sessionTimerRunning ? BREAK_TIMER : SESSION_TIMER
-      )
-      this.props.setElapsedTime(0)
+      setTimer(this.sessionTimerRunning ? BREAK_TIMER : SESSION_TIMER)
+      setElapsedTime(0)
       this.startTimer()
     }
   }

@@ -12,10 +12,10 @@ class Timer extends Component {
     this.drawTimer(this.context, this.startAngle, this.endAngle)
   }
   componentDidUpdate() {
-    let context = this.canvas.getContext('2d')
+    const context = this.canvas.getContext('2d')
     const { total, current } = this.props
-    let fraction = (total - current) / total
-    let currentAngle = this.endAngle - 2 * Math.PI * fraction
+    const fraction = (total - current) / total
+    const currentAngle = this.endAngle - 2 * Math.PI * fraction
     context.clearRect(0, 0, this.width, this.height)
     this.drawBackground(context)
     this.drawTimer(context, currentAngle, this.endAngle)

@@ -1,7 +1,8 @@
 import React from 'react'
+import Activity from './components/Activity'
 import Clock from './components/Clock'
-import Session from './components/Session'
 import ControlPanel from './components/ControlPanel'
+import Session from './components/Session'
 import './App.css'
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
         <Session title="session Length" pomodoro />
         <Session title="break Length" />
       </div>
+      <Activity />
       <Clock />
       <ControlPanel />
     </div>

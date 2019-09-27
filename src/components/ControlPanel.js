@@ -1,6 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { toggleRunning, setElapsedTime } from '../actions'
+import {
+  toggleRunning,
+  stopTimer,
+  setDuration,
+  setBreakDuration,
+  setElapsedTime,
+  DEFAULT_DURATION,
+  DEFAULT_BREAK_DURATION,
+  setTimer,
+  SESSION_TIMER,
+} from '../actions'
 import Alarm from '../utils/Alarm'
 import styles from './ControlPanel.module.css'
 
@@ -14,6 +24,10 @@ class ControlPanel extends Component {
     this.props.toggleRunning()
   }
   reset() {
+    this.props.stopTimer()
+    this.props.setTimer(SESSION_TIMER)
+    this.props.setDuration(DEFAULT_DURATION)
+    this.props.setBreakDuration(DEFAULT_BREAK_DURATION)
     this.props.setElapsedTime(0)
     Alarm.stop()
   }
@@ -44,7 +58,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   toggleRunning: () => dispatch(toggleRunning()),
+  stopTimer: () => dispatch(stopTimer()),
+  setDuration: duration => dispatch(setDuration(duration)),
+  setBreakDuration: duration => dispatch(setBreakDuration(duration)),
   setElapsedTime: time => dispatch(setElapsedTime(time)),
+  setTimer: timerType => dispatch(setTimer(timerType)),
 })
 
 export default connect(

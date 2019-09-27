@@ -16,16 +16,22 @@ span {
 }
 
 .duration {
+  display: flex;
+  align-items: center;
   font-size: 24px;
   background-color: var(--primary-color);
   color: white;
-  padding: 8px 12px;
+  padding: 0 13px;
+  height: 46px;
+  font-family: Helvetica, sans-serif;
 }
 
 .up,
 .down {
+  display: flex;
+  align-items: center;
   background-color: var(--primary-color);
-  padding: 10px;
+  padding: 13px;
 }
 
 .up {

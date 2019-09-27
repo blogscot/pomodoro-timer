@@ -4,16 +4,16 @@ import {
   SET_BREAK_DURATION,
   SELECT_TIMER,
   SET_ELAPSED_TIME,
-  POMODORO_TIMER,
+  SESSION_TIMER,
   BREAK_TIMER,
 } from '../actions'
 
 const defaultState = {
   running: false,
   elapsedTime: 0,
-  duration: 15 * 60,
-  breakDuration: 2 * 60,
-  timerType: POMODORO_TIMER,
+  duration: 10,
+  breakDuration: 20,
+  timerType: SESSION_TIMER,
 }
 
 const pomodoro = (state = defaultState, action) => {
@@ -35,7 +35,7 @@ const pomodoro = (state = defaultState, action) => {
       }
     case SELECT_TIMER:
       const { timerType } = action
-      if (timerType === POMODORO_TIMER || timerType === BREAK_TIMER) {
+      if (timerType === SESSION_TIMER || timerType === BREAK_TIMER) {
         return {
           ...state,
           timerType,

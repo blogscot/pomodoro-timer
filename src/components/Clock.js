@@ -1,24 +1,25 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { toggleRunning, setElapsedTime } from '../actions'
+import {
+  toggleRunning,
+  setElapsedTime,
+  setTimer,
+  SESSION_TIMER,
+  BREAK_TIMER,
+} from '../actions'
 import Timer from './Timer'
 import Display from './Display'
 import Alarm from '../utils/Alarm'
 import styles from './Clock.module.css'
 
-const SESSION = 'SESSION'
-const BREAK = 'BREAK'
-
 class Clock extends Component {
   running = false
-  currentTimer = SESSION
   timerID = null
   constructor(props) {
     super(props)
     this.startClock = this.startTimer.bind(this)
     this.tick = this.tick.bind(this)
   }
-
   componentDidUpdate() {
     if (!this.running && this.props.running) {
       this.running = true
@@ -38,19 +39,18 @@ class Clock extends Component {
     const { elapsedTime } = this.props
     const newTime = elapsedTime + 1
     this.props.setElapsedTime(newTime)
-    if (newTime >= this.currentDuration) {
+    if (newTime > this.currentDuration) {
       Alarm.play()
       clearInterval(this.timerID)
-      this.currentTimer = this.sessionTimerRunning ? BREAK : SESSION
+      this.props.setTimer(
+        this.sessionTimerRunning ? BREAK_TIMER : SESSION_TIMER
+      )
       this.props.setElapsedTime(0)
       this.startTimer()
     }
   }
   get sessionTimerRunning() {
-    return this.currentTimer === SESSION
-  }
-  get breakTimerRunning() {
-    return !this.sessionTimerRunning
+    return this.props.currentTimer === SESSION_TIMER
   }
   get currentDuration() {
     const { duration, breakDuration } = this.props
@@ -72,11 +72,13 @@ const mapStateToProps = state => ({
   duration: state.duration,
   breakDuration: state.breakDuration,
   elapsedTime: state.elapsedTime,
+  currentTimer: state.timerType,
 })
 
 const mapDispatchToProps = dispatch => ({
   toggleRunning: () => dispatch(toggleRunning()),
   setElapsedTime: time => dispatch(setElapsedTime(time)),
+  setTimer: timerType => dispatch(setTimer(timerType)),
 })
 
 export default connect(

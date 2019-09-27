@@ -4,7 +4,7 @@ export const SET_BREAK_DURATION = 'SET_REST_DURATION'
 export const SET_ELAPSED_TIME = 'SET_ELAPSED_TIME'
 
 export const SELECT_TIMER = 'SELECT_TIMER'
-export const POMODORO_TIMER = 'POMODORO_TIMER'
+export const SESSION_TIMER = 'SESSION_TIMER'
 export const BREAK_TIMER = 'BREAK_TIMER'
 
 export const toggleRunning = () => ({
@@ -26,7 +26,7 @@ export const setBreakDuration = breakDuration => ({
   breakDuration,
 })
 
-export const selectTimer = timerType => ({
+export const setTimer = timerType => ({
   type: SELECT_TIMER,
   timerType,
 })

@@ -24,7 +24,7 @@ class Timer extends Component {
     context.beginPath()
     context.arc(150, 150, 100, startAngle, endAngle)
     context.lineWidth = 5
-    context.strokeStyle = 'green'
+    context.strokeStyle = 'darkcyan'
     context.stroke()
   }
   drawBackground = context => {

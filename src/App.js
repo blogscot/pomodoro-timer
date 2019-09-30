@@ -10,6 +10,7 @@ function App(props) {
   const opacity = props.running ? '0.2' : '1'
   return (
     <div className="App">
+      <h1>Pomodoro Clock</h1>
       <div style={{ opacity }} id="sessions">
         <Session title="session Length" pomodoro />
         <Session title="break Length" />

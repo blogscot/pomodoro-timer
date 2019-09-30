@@ -1,14 +1,9 @@
-:root {
-  --primary-color: darkcyan;
-}
-
 .App {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80vh;
-  font-family: Roboto, sans-serif;
+  height: 75vh;
 }
 
 #sessions {

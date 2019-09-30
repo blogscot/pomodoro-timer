@@ -6,3 +6,13 @@ body {
   margin: 0;
   font-family: Roboto, sans-serif;
 }
+
+@font-face {
+  font-family: 'DS-Digital';
+  src: url('./fonts/digital.eot');
+  src: url('./fonts/digital.eot?#iefix') format('embedded-opentype'),
+    url('./fonts/digital.woff2') format('woff2'),
+    url('./fonts/digital.woff') format('woff'),
+    url('./fonts/digital.ttf') format('truetype'),
+    url('./fonts/digital.svg#DS-Digital') format('svg');
+}

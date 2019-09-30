@@ -3,4 +3,5 @@
   font-size: 54px;
   transform: translate3D(3px, 2px, 0);
   font-family: 'DS-Digital';
+  min-width: 120px;
 }

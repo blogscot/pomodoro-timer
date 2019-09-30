@@ -1,7 +1,14 @@
-img {
-  height: 20px;
+.controlPanel {
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-100px);
+  width: 70px;
 }
 
-.controlPanel {
-  transform: translateY(-100px);
+.controlPanel span {
+  padding: 4px;
+}
+
+.controlPanel img {
+  height: 24px;
 }

@@ -19,6 +19,11 @@ class Clock extends Component {
     // Use Web Worker to prevent browser from
     // buffering timer intervals
     this.worker = new WebWorker(worker)
+    this.worker.addEventListener('message', event => {
+      if (event.data === 'tick') {
+        this.tick()
+      }
+    })
   }
   componentDidUpdate() {
     if (!this.running && this.props.running) {
@@ -34,11 +39,6 @@ class Clock extends Component {
   }
   startTimer() {
     this.worker.postMessage('start')
-    this.worker.addEventListener('message', event => {
-      if (event.data === 'tick') {
-        this.tick()
-      }
-    })
   }
   stopTimer() {
     this.worker.postMessage('stop')
